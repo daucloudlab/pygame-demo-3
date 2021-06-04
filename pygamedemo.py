@@ -1,6 +1,8 @@
 import pygame
 import sys
 
+print("PyGame Demo")
+
 pygame.init()
 
 screen_width = 500
@@ -21,4 +23,3 @@ while running:
             running = False
             pygame.quit()
             sys.exit()
-
