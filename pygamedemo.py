@@ -29,6 +29,8 @@ clock = pygame.time.Clock()
 running = True
 sp = None 
 
+pygame.mouse.set_visible(False)
+
 while running:
 
     for event in pygame.event.get():
@@ -36,8 +38,13 @@ while running:
             running = False
             pygame.quit()
 
+    screen.fill(WHITE)
+
     pos = pygame.mouse.get_pos()
 
+    if pygame.mouse.get_focused():
+        pygame.draw.circle(screen, BLUE, pos, 7)
+        
     pressed = pygame.mouse.get_pressed()
     if pressed[0]:
         if sp is None:
@@ -48,8 +55,10 @@ while running:
 
         screen.fill(WHITE)
         pygame.draw.rect(screen, BLUE, (sp[0], sp[1], width, height))
-        pygame.display.update()
+        
     else:
         sp = None
 
+    pygame.display.update()
+    
     clock.tick(FPS)
