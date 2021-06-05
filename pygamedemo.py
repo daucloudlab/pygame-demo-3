@@ -27,28 +27,29 @@ pygame.display.update()
 
 clock = pygame.time.Clock()
 running = True
+sp = None 
 
-flStartDraw = False
-sp = se = 0 
 while running:
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
             pygame.quit()
-        elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-            flStartDraw = True
-            sp = event.pos
 
-        elif event.type == pygame.MOUSEMOTION:
-            if flStartDraw:
-                height = event.pos[1] - sp[1]
-                width = event.pos[0] - sp[0]
+    pos = pygame.mouse.get_pos()
 
-                screen.fill(WHITE)
-                pygame.draw.rect(screen, RED, (sp[0], sp[1], width, height))
-                pygame.display.update()
-        elif event.type == pygame.MOUSEBUTTONUP and event.button == 1:
-            flStartDraw = False
-        
+    pressed = pygame.mouse.get_pressed()
+    if pressed[0]:
+        if sp is None:
+            sp = pos
+
+        width = pos[0] - sp[0]
+        height = pos[1] - sp[1]
+
+        screen.fill(WHITE)
+        pygame.draw.rect(screen, BLUE, (sp[0], sp[1], width, height))
+        pygame.display.update()
+    else:
+        sp = None
+
     clock.tick(FPS)
