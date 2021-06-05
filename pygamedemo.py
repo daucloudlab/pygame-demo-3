@@ -22,35 +22,33 @@ x = screen_width // 2
 y = screen_height // 2
 speed = 5
 
+screen.fill(WHITE)
+pygame.display.update()
 
 clock = pygame.time.Clock()
 running = True
-flLeft = flRight = False
 
+flStartDraw = False
+sp = se = 0 
 while running:
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
             pygame.quit()
-        elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_LEFT:
-                flLeft = True
-            elif event.key == pygame.K_RIGHT:
-                flRight = True
-        elif event.type == pygame.KEYUP:
-            if event.key == pygame.K_LEFT:
-                flLeft = False
-            elif event.key == pygame.K_RIGHT:
-                flRight = False
-    
-    if flLeft:
-        x -= speed
-    elif flRight:
-        x += speed
+        elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+            flStartDraw = True
+            sp = event.pos
 
-    screen.fill(WHITE) 
-    pygame.draw.rect(screen, BLUE, (x, y, 10, 20))
-    pygame.display.update()          
-    
+        elif event.type == pygame.MOUSEMOTION:
+            if flStartDraw:
+                height = event.pos[1] - sp[1]
+                width = event.pos[0] - sp[0]
+
+                screen.fill(WHITE)
+                pygame.draw.rect(screen, RED, (sp[0], sp[1], width, height))
+                pygame.display.update()
+        elif event.type == pygame.MOUSEBUTTONUP and event.button == 1:
+            flStartDraw = False
+        
     clock.tick(FPS)
