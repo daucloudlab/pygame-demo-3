@@ -18,27 +18,14 @@ BLUE = (0, 0, 255)
 GREEN = (0, 255, 0)
 RED = (255, 0, 0)
 
-pygame.draw.rect(screen, WHITE, (10, 10, 50, 100), 2)
+x = screen_width // 2
+y = screen_height // 2
+speed = 5
 
-pygame.draw.line(screen, GREEN, (200, 20), (350, 50), 5)
-pygame.draw.aaline(screen, GREEN, (200, 40), (350, 70), 5)
-
-pygame.draw.lines(screen, RED, True, [(200, 80), (250, 80), (300, 200)], 2)
-pygame.draw.aalines(screen, RED, True, [(300, 80), (350, 80), (400, 200)], 2)
-
-pygame.draw.polygon(screen, WHITE, [(150, 210), (180, 250), (90, 290), (30, 230)])
-pygame.draw.polygon(screen, WHITE, [(150, 310), (180, 350), (90, 390), (30, 330)], 1)
-
-pygame.draw.circle(screen, BLUE, (300, 250), 40)
-pygame.draw.ellipse(screen, BLUE, (300, 300, 100, 50), 1)
-
-pi = 3.14
-pygame.draw.arc(screen, RED, (450,30,50,150), pi, 2*pi, 5)
-
-pygame.display.update()
 
 clock = pygame.time.Clock()
 running = True
+flLeft = flRight = False
 
 while running:
 
@@ -46,5 +33,24 @@ while running:
         if event.type == pygame.QUIT:
             running = False
             pygame.quit()
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_LEFT:
+                flLeft = True
+            elif event.key == pygame.K_RIGHT:
+                flRight = True
+        elif event.type == pygame.KEYUP:
+            if event.key == pygame.K_LEFT:
+                flLeft = False
+            elif event.key == pygame.K_RIGHT:
+                flRight = False
+    
+    if flLeft:
+        x -= speed
+    elif flRight:
+        x += speed
+
+    screen.fill(WHITE) 
+    pygame.draw.rect(screen, BLUE, (x, y, 10, 20))
+    pygame.display.update()          
     
     clock.tick(FPS)
