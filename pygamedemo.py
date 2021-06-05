@@ -11,7 +11,7 @@ FPS = 60
 
 screen = pygame.display.set_mode((screen_width, screen_height))
 pygame.display.set_caption("PyGame Demo App")
-pygame.display.set_icon(pygame.image.load('logo.bmp'))
+
 
 WHITE = (255, 255, 255)
 BLUE = (0, 0, 255)
@@ -60,5 +60,5 @@ while running:
         sp = None
 
     pygame.display.update()
-    
+
     clock.tick(FPS)
